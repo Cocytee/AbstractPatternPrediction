@@ -62,7 +62,11 @@ end
 
 #Exctraction initialization (via variables or external file)
 function ExctractorBuilder(fileName::AbstractString,cIndividuals::Int,rStats::Int;cSets::Int=0,cCat::Int=0,dataStartAt::Tuple{Int,Int}=(0,0),dataStopAt::Tuple{Int,Int}=(0,0))
+	#Working /w variables
+	#Scanning data file
 end
 
 function ExctractorBuilder(BuilderFileName::AbstractString)
+	#Working /w config file
+	#Reading config file
 end
