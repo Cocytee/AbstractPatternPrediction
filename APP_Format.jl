@@ -46,7 +46,11 @@ function FileMUX(fileName::AbstractString)
 	f = "None"
 	ns = split(fileName,".")
 	if (ns[end] == "csv") || (ns[end] == "txt")
-		f = open(fileName,"r")
+		try
+			f = open(fileName,"r")
+		catch
+			println("\t\t >> The file do not exist or is corrupted <<")
+		end
 	elseif (ns[end] == "xls") || (ns[end] == "xlsx")
 		#to update
 	else
