@@ -57,8 +57,6 @@ end
 
 #Exctraction initialization (via variables or external file)
 function ExctractorBuilder(fileName::AbstractString,cIndividuals::Int,rStats::Int;cSets::Int=0,cCat::Int=0,dataStartAt::Tuple{Int,Int}=(0,0),dataStopAt::Tuple{Int,Int}=(0,0))
-<<<<<<< Updated upstream
-=======
 	#Working /w variables
 	f,format = FileMUX(fileName)
 
@@ -79,8 +77,6 @@ function ExctractorBuilder(fileName::AbstractString,cIndividuals::Int,rStats::In
 	=#
 
 	DSsettings(fileName,format,abssize,relSize,uIndividuals,uSets,uCategories,uStats,nIndividuals,nSets,nCategories,nStats,cIndividuals,cSets,cCat,rStats,dataStartAt,dataStopAt)
-
->>>>>>> Stashed changes
 end
 
 function ExctractorBuilder(BuilderFileName::AbstractString)
