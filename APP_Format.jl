@@ -1,12 +1,6 @@
 #Yet another Data Exctractor ?
 #Super ultra modular function for generic and periodic data exctration + file management
 
-#-------------------------
-#Done
-# > Structs + Builder function proto 1
-#ToDo
-# > File Extension management + openning
-
 #Structures
 mutable struct DSsettings
 	#DSsetting input values need to be preprocessed and controled via the corresponding function before initialization.
@@ -48,20 +42,45 @@ DSpool = Dict{AbstractString,DSbox}()
 
 #File Extention Check
 function FileMUX(fileName::AbstractString)
-	f = nothing
+	println("\t > Analysing : ",fileName)
+	f = "None"
 	ns = split(fileName,".")
 	if (ns[end] == ".csv") || (ns[end] == ".txt")
 		f = open(fileName,"r")
-	elseif
+	elseif (ns[end] == ".xls") || (ns[end] == ".xlsx")
 		#to update
-	elseif
-		print "\t > File format not recognized"
+	else
+		println("\t\t >> File format not recognized <<")
 	end
 	return f,ns[end]
 end
 
 #Exctraction initialization (via variables or external file)
 function ExctractorBuilder(fileName::AbstractString,cIndividuals::Int,rStats::Int;cSets::Int=0,cCat::Int=0,dataStartAt::Tuple{Int,Int}=(0,0),dataStopAt::Tuple{Int,Int}=(0,0))
+<<<<<<< Updated upstream
+=======
+	#Working /w variables
+	f,format = FileMUX(fileName)
+
+	#Scanning data file
+	readlines(f)
+
+	#=
+	absSize
+	relSize
+	uIndividuals
+	uSets
+	uCategories
+	uStats
+	nIndividuals
+	nSets
+	nCategories
+	nStats
+	=#
+
+	DSsettings(fileName,format,abssize,relSize,uIndividuals,uSets,uCategories,uStats,nIndividuals,nSets,nCategories,nStats,cIndividuals,cSets,cCat,rStats,dataStartAt,dataStopAt)
+
+>>>>>>> Stashed changes
 end
 
 function ExctractorBuilder(BuilderFileName::AbstractString)
