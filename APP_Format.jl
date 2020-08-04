@@ -45,9 +45,9 @@ function FileMUX(fileName::AbstractString)
 	println("\t > Analysing : ",fileName)
 	f = "None"
 	ns = split(fileName,".")
-	if (ns[end] == ".csv") || (ns[end] == ".txt")
+	if (ns[end] == "csv") || (ns[end] == "txt")
 		f = open(fileName,"r")
-	elseif (ns[end] == ".xls") || (ns[end] == ".xlsx")
+	elseif (ns[end] == "xls") || (ns[end] == "xlsx")
 		#to update
 	else
 		println("\t\t >> File format not recognized <<")
