@@ -1,7 +1,7 @@
 #Yet another Data Exctractor ?
 #Super ultra modular function for generic and periodic data exctration + file management
 
-#Structures
+#Structures ------------------------------------------
 mutable struct DSsettings
 	#DSsetting input values need to be preprocessed and controled via the corresponding function before initialization.
 	#absSize is size(readlines) whatever is inside ; relSize is uSets*uStats (used data size)
@@ -38,34 +38,33 @@ mutable struct DSbox
 
 end
 
-DSpool = Dict{AbstractString,DSbox}()
-
-#File Extention Check
+#Private functions ------------------------------------------
 function FileMUX(fileName::AbstractString)
-	println("\t > Analysing : ",fileName)
 	f = "None"
 	ns = split(fileName,".")
 	if (ns[end] == "csv") || (ns[end] == "txt")
 		try
 			f = open(fileName,"r")
 		catch
-			println("\t\t >> The file do not exist or is corrupted <<")
+			println("\t > The file do not exist or is corrupted")
+			return nothing
 		end
 	elseif (ns[end] == "xls") || (ns[end] == "xlsx")
 		#to update
 	else
-		println("\t\t >> File format not recognized <<")
+		println("\t > File format not recognized")
+		return nothing
 	end
 	return f,ns[end]
 end
 
+#Public functions ------------------------------------------
 #Exctraction initialization (via variables or external file)
 function ExctractorBuilder(fileName::AbstractString,cIndividuals::Int,rStats::Int;cSets::Int=0,cCat::Int=0,dataStartAt::Tuple{Int,Int}=(0,0),dataStopAt::Tuple{Int,Int}=(0,0))
-	#Working /w variables
-	f,format = FileMUX(fileName)
 
-	#Scanning data file
-	readlines(f)
+	r = FileMUX(fileName)
+	r==nothing && return false
+	(f,format) = r
 
 	#=
 	absSize
