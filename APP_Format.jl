@@ -58,7 +58,7 @@ function FileMUX(fileName::AbstractString)
 	return f,ns[end]
 end
 
-function FileSizing(f,cI,rS,cS,cC,dStart,dStop)
+function FileSizing(file,ext,cI,rS,cS,cC,dStart,dStop)
 	return nothing
 end
 
