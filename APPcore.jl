@@ -3,7 +3,7 @@
 
 module APPcore
 
-using Statistics
+using Statistics,CSV
 
 include("APP_Abstract.jl")
 include("APP_Format.jl")

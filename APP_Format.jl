@@ -40,33 +40,68 @@ mutable struct DSbox
 
 end
 
+#Variables ------------------------------------------
+DocTypes = ["txt","csv","xls","xlsx"]
+
 #Private functions ------------------------------------------
-function FileMUX(fileName::AbstractString)
-	f = "None"
-	ns = split(fileName,".")
-	if (ns[end] == "csv") || (ns[end] == "txt")
-		try
-			f = open(fileName,"r")
-		catch
-			println("\t > The file do not exist or is corrupted")
-			return nothing
+function FileMUX!(DSS::DSsettings)
+	ns = split(DSS.fileName,".")
+	if ns[end] in DocTypes
+		if isfile(DSS.fileName)
+			DSS.format = ns[end]
+		else
+			println("\t > The file do not exist")
+			return false
 		end
-	elseif (ns[end] == "xls") || (ns[end] == "xlsx")
-		#to update
 	else
-		println("\t > File format not recognized")
-		return nothing
+		println("\t > File format not recognized or used into the process")
+		return false
 	end
-	return f,ns[end]
+	return true
 end
 
-function FileSizing(f,DSS::DSsettings)
-	if (DSS.format == "csv") || (DSS.format == "txt")
-		data = readlines(f)
-		return data,0,0
+function FileSizing!(DSS::DSsettings)
+
+	if (DSS.format == "txt")
+
+	elseif (DSS.format == "csv")
+		data = CSV.read(DSS.fileName,header=false)
 	else
-		return nothing
+
 	end
+
+	DSS.absSize = size(data)
+
+	yRange = [DSS.rStats,DSS.dataStartAt[1],DSS.dataStopAt[1]]
+	yNames = ["rStats","dataStartAt(Y)","dataStopAt(Y)"]
+	xRange = [DSS.cIndividuals,DSS.cSets,DSS.cCategories,DSS.dataStartAt[2],DSS.dataStopAt[2]]
+	xNames = ["cIndividuals","cSets","cCategories","dataStartAt(X)","dataStopAt(X)"]
+	my,n = findmax(yRange)
+	if my > DSS.absSize[1]
+		println("\t > ",yNames[n]," out of bounds (max row: ",DSS.absSize[1],")")
+		return false
+	end
+	mx,n = findmax(xRange)
+	if mx > DSS.absSize[1]
+		println("\t > ",xNames[n]," out of bounds (max column: ",DSS.absSize[2],")")
+		return false
+	end
+
+	if 0 in DSS.dataStartAt
+		if (my+1 > DSS.absSize[1]) || (mx+1 > DSS.absSize[2])
+			println("\t > Unable to locate Data location (datasStartAt :",DSS.dataStartAt,")")
+			println("\t > Please ajust manually ::dataStartAt:: variable")
+			println("\t > If needed, type : '? ExctractorBuilder()' in the Julia terminal")
+		else
+			DSS.dataStartAt = (my+1,mx+1)
+		end
+	end
+	if 0 in DSS.dataStopAt
+		DSS.dataStopAt = (DSS.absSize[1],DSS.absSize[2])
+	end
+	DSS.relSize = (DSS.dataStopAt[1]-DSS.dataStartAt[1]+1) * (DSS.dataStopAt[2]-DSS.dataStartAt[2]+1)
+
+	return true
 end
 
 #Public functions ------------------------------------------
@@ -75,13 +110,11 @@ function ExctractorBuilder(fileName::AbstractString,cIndividuals::Int,rStats::In
 
 	IDSS = DSsettings(fileName,"",(0,0),0,[""],[""],[""],[""],0,0,0,0,cIndividuals,cSets,cCategories,rStats,dataStartAt,dataStopAt)
 
-	r = FileMUX(IDSS.fileName)
-	r==nothing && return nothing
-	(f,IDSS.format) = r
+	status = FileMUX!(IDSS)
+	status==false && return false
 
-	r = FileSizing(f,IDSS)
-	r==nothing && return nothing
-	(rsDATA,IDSS.absSize,IDSS.relSize) = r
+	status = FileSizing!(IDSS)
+	status==false && return false
 
 	return IDSS
 end
