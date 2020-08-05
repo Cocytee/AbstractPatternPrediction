@@ -58,6 +58,9 @@ function FileMUX(fileName::AbstractString)
 	return f,ns[end]
 end
 
+function FileSizing(f,cI,rS,cS,cC,dStart,dStop)
+end
+
 #Public functions ------------------------------------------
 #Exctraction initialization (via variables or external file)
 function ExctractorBuilder(fileName::AbstractString,cIndividuals::Int,rStats::Int;cSets::Int=0,cCat::Int=0,dataStartAt::Tuple{Int,Int}=(0,0),dataStopAt::Tuple{Int,Int}=(0,0))
