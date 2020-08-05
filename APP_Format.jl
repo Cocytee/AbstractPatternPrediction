@@ -104,6 +104,9 @@ function FileSizing!(DSS::DSsettings)
 	return true
 end
 
+function FileAnalyzing!(DSS::DSsettings)
+end
+
 #Public functions ------------------------------------------
 #Exctraction initialization (via variables or external file)
 function ExctractorBuilder(fileName::AbstractString,cIndividuals::Int,rStats::Int;cSets::Int=0,cCategories::Int=0,dataStartAt::Tuple{Int,Int}=(0,0),dataStopAt::Tuple{Int,Int}=(0,0))
