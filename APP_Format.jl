@@ -72,7 +72,7 @@ end
 #Exctraction initialization (via variables or external file)
 function ExctractorBuilder(fileName::AbstractString,cIndividuals::Int,rStats::Int;cSets::Int=0,cCategories::Int=0,dataStartAt::Tuple{Int,Int}=(0,0),dataStopAt::Tuple{Int,Int}=(0,0))
 
-	IDSS = DSsettings(fileName,"",(0,0),0,[""],[""],[""],[""],0,0,0,0,cIndividuals,cSets,cCat,rStats,dataStartAt,dataStopAt)
+	IDSS = DSsettings(fileName,"",(0,0),0,[""],[""],[""],[""],0,0,0,0,cIndividuals,cSets,cCategories,rStats,dataStartAt,dataStopAt)
 
 	r = FileMUX(IDSS.fileName)
 	r==nothing && return nothing
