@@ -61,7 +61,11 @@ function FileMUX(fileName::AbstractString)
 end
 
 function FileSizing(f,DSS::DSsettings)
-	return nothing
+	if (ns[end] == "csv") || (ns[end] == "txt")
+		return nothing
+	else
+		return nothing
+	end
 end
 
 #Public functions ------------------------------------------
