@@ -61,9 +61,9 @@ function FileMUX(fileName::AbstractString)
 end
 
 function FileSizing(f,DSS::DSsettings)
-	if (ns[end] == "csv") || (ns[end] == "txt")
-		readlines(f)
-		return nothing
+	if (DSS.format == "csv") || (DSS.format == "txt")
+		data = readlines(f)
+		return data,0,0
 	else
 		return nothing
 	end
