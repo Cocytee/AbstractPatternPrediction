@@ -9,8 +9,10 @@ mutable struct DSsettings
 	format::AbstractString
 	absSize::Tuple{Int,Int}
 	relSize::Int
-	#uIndividuals is the list of all the unique Indiviuals of the population, uSets is the list of all the different Sets of Data (from 1 to Inf. ; no redundancy accepted)
-	#uCategories is the list of all unique Categories individuals can be sorted with, uStats is the list of statistical parameters issues from indiviuals.
+	#uIndividuals is the list of all the unique Indiviuals of the population
+	#uSets is the list of all the different Sets of Data (from 1 to Inf. ; no redundancy accepted)
+	#uCategories is the list of all unique Categories individuals can be sorted with
+	#uStats is the list of statistical parameters issues from indiviuals.
 	uIndividuals::Array{AbstractString,1}
 	uSets::Array{AbstractString,1}
 	uCategories::Array{AbstractString,1}
@@ -23,7 +25,7 @@ mutable struct DSsettings
 	#Columns (c) and Rows (r) of each variable into the designated file.
 	cIndividuals::Int
 	cSets::Int
-	cCat::Int
+	cCategories::Int
 	rStats::Int
 	dataStartAt::Tuple{Int,Int}
 	dataStopAt::Tuple{Int,Int}
@@ -58,32 +60,25 @@ function FileMUX(fileName::AbstractString)
 	return f,ns[end]
 end
 
-function FileSizing(file,ext,cI,rS,cS,cC,dStart,dStop)
+function FileSizing(f,DSS::DSsettings)
 	return nothing
 end
 
 #Public functions ------------------------------------------
 #Exctraction initialization (via variables or external file)
-function ExctractorBuilder(fileName::AbstractString,cIndividuals::Int,rStats::Int;cSets::Int=0,cCat::Int=0,dataStartAt::Tuple{Int,Int}=(0,0),dataStopAt::Tuple{Int,Int}=(0,0))
+function ExctractorBuilder(fileName::AbstractString,cIndividuals::Int,rStats::Int;cSets::Int=0,cCategories::Int=0,dataStartAt::Tuple{Int,Int}=(0,0),dataStopAt::Tuple{Int,Int}=(0,0))
 
-	r = FileMUX(fileName)
-	r==nothing && return false
-	(f,format) = r
+	IDSS = DSsettings(fileName,"",(0,0),0,[""],[""],[""],[""],0,0,0,0,cIndividuals,cSets,cCat,rStats,dataStartAt,dataStopAt)
 
-	#=
-	absSize
-	relSize
-	uIndividuals
-	uSets
-	uCategories
-	uStats
-	nIndividuals
-	nSets
-	nCategories
-	nStats
-	=#
+	r = FileMUX(IDSS.fileName)
+	r==nothing && return nothing
+	(f,IDSS.format) = r
 
-	DSsettings(fileName,format,abssize,relSize,uIndividuals,uSets,uCategories,uStats,nIndividuals,nSets,nCategories,nStats,cIndividuals,cSets,cCat,rStats,dataStartAt,dataStopAt)
+	r = FileSizing(f,IDSS)
+	r==nothing && return nothing
+	(rsDATA,IDSS.absSize,IDSS.relSize) = r
+
+	return IDSS
 end
 
 function ExctractorBuilder(BuilderFileName::AbstractString)
