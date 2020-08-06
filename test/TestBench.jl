@@ -1,6 +1,6 @@
 #Try that shit !  
 
-include("./APPcore.jl")
+include("../src/APPcore.jl")
 using .APPcore
 
 DSS = APPcore.ExctractorBuilder("None.csv",1,1)
