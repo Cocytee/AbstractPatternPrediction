@@ -63,7 +63,7 @@ end
 function FileSizing!(DSS::DSsettings)
 
 	if (DSS.format == "txt")
-
+		data = readdlm(DSS.filename)
 	elseif (DSS.format == "csv")
 		data = CSV.read(DSS.fileName,header=false)
 	else
@@ -105,6 +105,7 @@ function FileSizing!(DSS::DSsettings)
 end
 
 function FileAnalyzing!(DSS::DSsettings)
+
 end
 
 #Public functions ------------------------------------------

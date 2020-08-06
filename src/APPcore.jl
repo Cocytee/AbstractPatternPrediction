@@ -3,7 +3,7 @@
 
 module APPcore
 
-using Statistics,CSV
+using Statistics,CSV,DelimitedFiles
 
 include("APP_Abstract.jl")
 include("APP_Format.jl")
