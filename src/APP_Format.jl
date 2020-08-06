@@ -40,7 +40,7 @@ mutable struct DSbox
 
 end
 
-#Variables ------------------------------------------
+#Variables -------------------------------------------
 DocTypes = ["txt","csv","xls","xlsx"]
 
 #Private functions ------------------------------------------
