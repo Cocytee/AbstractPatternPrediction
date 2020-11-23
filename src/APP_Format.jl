@@ -124,4 +124,5 @@ function ExctractorBuilder(fileName::AbstractString,cIndividuals::Int,rStats::In
 end
 
 function ExctractorBuilder(BuilderFileName::AbstractString)
+	data = readdlm(BuilderFileName)
 end
